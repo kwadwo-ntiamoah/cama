@@ -1,0 +1,146 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// shop
+model Category {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+  description String?
+
+  products Product[]
+
+  @@map("categories")
+}
+
+model Product {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+  description String
+  price Decimal @default(1.00)
+  in_stock Boolean @default(true)
+
+  categoryId Int
+  category Category @relation(fields: [categoryId], references: [id])
+
+  images Image[]
+  care_guide_infos CareGuide[]
+  orders Order[]
+
+  @@map("products")
+}
+
+model Image  {
+  id Int @id @default(autoincrement())
+  title String 
+  url String
+
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([title, url])
+  @@map("images")
+}
+
+model CareGuide {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  description String
+
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+
+  @@unique([description])
+  @@map("care_guides")
+}
+
+model Order {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  firstname String
+  lastname String
+  phone String
+  email String
+  country String
+  region String
+  address String
+  additional_info String?
+  quantity Int
+  paid Boolean @default(false)
+  fulfilled Boolean @default(false)
+
+  productId Int
+  product Product @relation(fields: [productId], references: [id])
+
+  @@map("orders")
+}
+
+// pama
+model Package {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+  price Decimal
+
+  benefits Benefit[]
+
+  @@map("packages")
+}
+
+model Benefit {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  packageId Int
+  package Package @relation(fields: [packageId], references: [id])
+
+  @@map("benefits")
+}
+
+// radio
+model Day {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+  programmes Programme[]
+
+  @@map("days")
+}
+
+model Programme {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  title String
+  description String
+  time String
+
+  dayId Int
+  day Day @relation(fields: [dayId], references: [id])
+
+  @@map("programmes")
+}
