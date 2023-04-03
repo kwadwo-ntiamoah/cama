@@ -1,4 +1,4 @@
-import { IsBtcAddress, IsEmail, IsNotEmpty, IsNumber, IsNumberString, IsOptional, isString, IsString } from "class-validator";
+import { IsArray, IsBtcAddress, IsEmail, IsNotEmpty, IsNumber, IsNumberString, IsOptional, isString, IsString } from "class-validator";
 
 export class OrderDto {
     @IsString()
@@ -37,7 +37,17 @@ export class OrderDto {
     @IsNotEmpty()
     quantity: number
 
+    @IsArray()
+    @IsNotEmpty()
+    cartItems: CartItemDto[]
+}
+
+export class CartItemDto {
+    @IsNumber()
+    product: number
+
     @IsNumber()
     @IsNotEmpty()
-    productId: number
+    quantity: number
+
 }

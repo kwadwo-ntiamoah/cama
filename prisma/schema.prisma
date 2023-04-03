@@ -39,7 +39,6 @@ model Product {
 
   images Image[]
   care_guide_infos CareGuide[]
-  orders Order[]
 
   @@map("products")
 }
@@ -87,8 +86,7 @@ model Order {
   paid Boolean @default(false)
   fulfilled Boolean @default(false)
 
-  productId Int
-  product Product @relation(fields: [productId], references: [id])
+  products Int[]
 
   @@map("orders")
 }

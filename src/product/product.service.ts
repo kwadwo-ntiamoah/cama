@@ -29,4 +29,20 @@ export default class ProductService {
 
         return response
     }
+
+    async getProducts(): Promise<Product[]> {
+        return await this.prisma.product.findMany({
+            include: { category: true, images: true }
+        });
+    }
+
+    async getProduct(id: string): Promise<Product> {
+        return this.prisma.product.findUnique({
+            where: { id: parseInt(id) },
+            include: {
+                category: true,
+                images: true
+            }
+        });
+    }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post, Param } from "@nestjs/common";
 import { ProductDto } from "./dto";
 import ProductService from "./product.service";
 
@@ -11,13 +11,13 @@ export default class ProductController {
         return await this.productService.createProduct(payload)
     }
 
-    // @Post(":id")
-    // async updateProduct(@Param("id") id: string) {
-    //     return await this.productService.updateProduct()
-    // }
+    @Get("")
+    async getProducts() {
+        return this.productService.getProducts()
+    }
 
-    // @Delete(":id")
-    // async deleteProduct(@Param("id") id: string) {
-    //     return await this.productService.deleteProduct()
-    // }
+    @Get(":id")
+    async getProduct(@Param("id") id: string) {
+        return await this.productService.getProduct(id);
+    }
 }
