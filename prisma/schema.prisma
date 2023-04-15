@@ -144,3 +144,25 @@ model Programme {
 
   @@map("programmes")
 }
+
+model Request {
+  id Int @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  fullname String
+  country String
+  email String
+  phoneNumber String
+  content String
+  fulfilled Boolean
+
+  requestType RequestType
+
+  @@map("requests")
+}
+
+enum RequestType {
+  PRAYER 
+  TESTIMONY
+}
