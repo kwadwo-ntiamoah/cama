@@ -110,6 +110,8 @@ model Benefit {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  description String
+
   packageId Int
   package Package @relation(fields: [packageId], references: [id])
 

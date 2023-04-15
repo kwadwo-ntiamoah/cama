@@ -1,5 +1,4 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
 import { PaymentDto } from "./dto/payment.dto";
 import axios from "axios"
 import { ConfigService } from "@nestjs/config";
